@@ -1,0 +1,28 @@
+playlistId: default-sprint
+seed: 1337
+stages:
+  - name: warmup
+    length: 2
+    difficulty: easy
+    durationModifier: 0.9
+    banList: []
+  - name: midrun
+    length: 2
+    difficulty: medium
+    durationModifier: 1.0
+    banList: []
+  - name: climax
+    length: 1
+    difficulty: hard
+    durationModifier: 1.1
+    banList:
+      - quick-tap
+rules:
+  allowRepeats: false
+  timeoutMs: 25000
+  failureLimit: 3
+  postFailureCooldownMs: 1500
+  selection: weighted
+  reseedEachStage: false
+notes: |
+  The default sprint playlist runs five applets in escalating difficulty. Durations are scaled per stage and clamped by each applet's registry metadata. Agents can duplicate this file to create themed rotations.

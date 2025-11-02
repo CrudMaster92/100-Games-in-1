@@ -1,0 +1,17 @@
+{
+  "id": "template-id",
+  "name": "Template Name",
+  "version": "0.1.0",
+  "entry": "applets/template/index.html",
+  "icon": "applets/template/assets/icon.png",
+  "idealDurationMs": 15000,
+  "minDurationMs": 12000,
+  "maxDurationMs": 20000,
+  "capabilities": ["audio"],
+  "inputs": ["host.start", "host.setDifficulty", "host.setTimeBudget", "host.pause", "host.resume", "host.end"],
+  "outputs": ["applet.ready", "applet.progress", "applet.result", "applet.error"],
+  "assets": {
+    "local": [],
+    "shared": []
+  }
+}

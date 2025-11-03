@@ -1,0 +1,29 @@
+{
+  "id": "snake-sprint",
+  "name": "Snake Sprint",
+  "version": "1.0.0",
+  "entry": "applets/snake-sprint/index.html",
+  "icon": "applets/snake-sprint/assets/icon.svg",
+  "idealDurationMs": 10000,
+  "minDurationMs": 9000,
+  "maxDurationMs": 12000,
+  "capabilities": [],
+  "inputs": [
+    "host.bootstrap",
+    "host.start",
+    "host.pause",
+    "host.resume",
+    "host.setTimeBudget",
+    "host.end"
+  ],
+  "outputs": [
+    "applet.ready",
+    "applet.progress",
+    "applet.result",
+    "applet.error"
+  ],
+  "assets": {
+    "local": ["assets/icon.svg"],
+    "shared": []
+  }
+}

@@ -26,31 +26,42 @@
                   <p class="clock">12:00</p>
                 </header>
                 <div class="screen-body">
-                  <div class="title-logo">
-                    <span class="logo-shadow">100</span>
-                    <span class="logo-main">100</span>
-                    <span class="logo-sub">Games in 1</span>
+                  <div class="screen-panel screen-panel--menu" data-panel="menu">
+                    <div class="title-logo">
+                      <span class="logo-shadow">100</span>
+                      <span class="logo-main">100</span>
+                      <span class="logo-sub">Games in 1</span>
+                    </div>
+                    <div class="menu-frame">
+                      <p class="menu-label">Agent Update Queue</p>
+                      <ul class="menu-list" role="menu">
+                        <li class="menu-item active" role="menuitem">
+                          Quick Tap — Rapid reflex target chase
+                        </li>
+                        <li class="menu-item" role="menuitem">
+                          Color Match — Align swatches before the timer fades
+                        </li>
+                        <li class="menu-item" role="menuitem">
+                          Orb Dodge — Weave through incoming cosmic hazards
+                        </li>
+                        <li class="menu-item" role="menuitem">
+                          Snake Sprint — Dash to the flashing snack in 10s
+                        </li>
+                      </ul>
+                    </div>
+                    <footer class="screen-footer">
+                      <p>Insert coin or press start to begin.</p>
+                    </footer>
                   </div>
-                  <div class="menu-frame">
-                    <p class="menu-label">Agent Update Queue</p>
-                    <ul class="menu-list" role="menu">
-                      <li class="menu-item active" role="menuitem">
-                        Quick Tap — Rapid reflex target chase
-                      </li>
-                      <li class="menu-item" role="menuitem">
-                        Color Match — Align swatches before the timer fades
-                      </li>
-                      <li class="menu-item" role="menuitem">
-                        Orb Dodge — Weave through incoming cosmic hazards
-                      </li>
-                      <li class="menu-item" role="menuitem">
-                        Snake Sprint — Dash to the flashing snack in 10s
-                      </li>
-                    </ul>
+                  <div class="screen-panel screen-panel--browser" data-panel="browser" hidden>
+                    <div class="browser-header">
+                      <p class="browser-title">Test Cabinet</p>
+                      <button type="button" class="browser-close" aria-label="Return to dashboard">Back</button>
+                    </div>
+                    <p class="browser-subtitle">Select a game to launch a standalone playtest window.</p>
+                    <ul class="applet-grid" role="list"></ul>
+                    <p class="browser-hint">Games open in a new tab so you can focus on the chosen build.</p>
                   </div>
-                  <footer class="screen-footer">
-                    <p>Insert coin or press start to begin.</p>
-                  </footer>
                 </div>
               </div>
             </div>
@@ -69,7 +80,7 @@
               <div class="knob-label">Volume</div>
             </div>
             <div class="control-stack">
-              <button class="job-pill" type="button">Quick Tap · tighten spawn pacing</button>
+              <button class="job-pill" type="button" id="open-game-browser">Test cabinet · browse applets</button>
               <button class="job-pill" type="button">Color Match · polish palette hints</button>
               <button class="job-pill" type="button">Snake Sprint · verify countdown tuning</button>
             </div>
@@ -80,5 +91,144 @@
         <div class="glow ambient"></div>
       </section>
     </main>
+    <script>
+      (() => {
+        const openButton = document.getElementById('open-game-browser');
+        const menuPanel = document.querySelector('[data-panel="menu"]');
+        const browserPanel = document.querySelector('[data-panel="browser"]');
+        const closeButton = browserPanel?.querySelector('.browser-close');
+        const screenBody = document.querySelector('.screen-body');
+        const appletGrid = browserPanel?.querySelector('.applet-grid');
+
+        if (!openButton || !menuPanel || !browserPanel || !closeButton || !screenBody || !appletGrid) {
+          return;
+        }
+
+        let hasLoadedRegistry = false;
+
+        const focusElement = (element) => {
+          if (!element || typeof element.focus !== 'function') return;
+          try {
+            element.focus({ preventScroll: true });
+          } catch (error) {
+            element.focus();
+          }
+        };
+
+        const renderStatus = (message) => {
+          appletGrid.innerHTML = '';
+          const statusItem = document.createElement('li');
+          statusItem.className = 'applet-grid__status';
+          statusItem.textContent = message;
+          appletGrid.appendChild(statusItem);
+        };
+
+        const showBrowser = () => {
+          menuPanel.hidden = true;
+          browserPanel.hidden = false;
+          screenBody.classList.add('screen-body--browser');
+          openButton.setAttribute('aria-pressed', 'true');
+          focusElement(closeButton);
+
+          if (!hasLoadedRegistry) {
+            loadRegistry();
+          }
+        };
+
+        const hideBrowser = () => {
+          browserPanel.hidden = true;
+          menuPanel.hidden = false;
+          screenBody.classList.remove('screen-body--browser');
+          openButton.setAttribute('aria-pressed', 'false');
+          focusElement(openButton);
+        };
+
+        const loadRegistry = async () => {
+          hasLoadedRegistry = true;
+          renderStatus('Loading applet registry…');
+
+          try {
+            const response = await fetch('../registry/applets.json');
+            if (!response.ok) {
+              throw new Error('Unable to load registry');
+            }
+
+            const applets = await response.json();
+            if (!Array.isArray(applets) || applets.length === 0) {
+              renderStatus('No applets registered yet.');
+              return;
+            }
+
+            appletGrid.innerHTML = '';
+
+            applets
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .forEach((applet) => {
+                if (!applet || !applet.name || !applet.entry) {
+                  return;
+                }
+
+                const item = document.createElement('li');
+                item.className = 'applet-card';
+
+                const link = document.createElement('a');
+                link.className = 'applet-link';
+                link.href = `../${applet.entry}`;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.title = `Open ${applet.name}`;
+                link.dataset.appletId = applet.id || '';
+
+                const name = document.createElement('span');
+                name.className = 'applet-name';
+                name.textContent = applet.name;
+                link.appendChild(name);
+
+                const metaBits = [];
+                if (Array.isArray(applet.difficulty) && applet.difficulty.length) {
+                  metaBits.push(`Difficulty: ${applet.difficulty.join(' • ')}`);
+                }
+                if (typeof applet.minDurationMs === 'number' && typeof applet.maxDurationMs === 'number') {
+                  const minSeconds = Math.round(applet.minDurationMs / 1000);
+                  const maxSeconds = Math.round(applet.maxDurationMs / 1000);
+                  metaBits.push(`Session: ${minSeconds}-${maxSeconds}s`);
+                }
+
+                if (metaBits.length) {
+                  const meta = document.createElement('span');
+                  meta.className = 'applet-meta';
+                  meta.textContent = metaBits.join(' · ');
+                  link.appendChild(meta);
+                }
+
+                if (applet.notes) {
+                  const note = document.createElement('span');
+                  note.className = 'applet-note';
+                  note.textContent = applet.notes;
+                  link.appendChild(note);
+                }
+
+                item.appendChild(link);
+                appletGrid.appendChild(item);
+              });
+
+            if (!appletGrid.children.length) {
+              renderStatus('Applets found but unable to render entries.');
+            }
+          } catch (error) {
+            renderStatus('Failed to load applet registry.');
+          }
+        };
+
+        openButton.addEventListener('click', showBrowser);
+        closeButton.addEventListener('click', hideBrowser);
+        browserPanel.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            hideBrowser();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100 Games in 1 - Retro TV Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="viewport">
+      <div class="scanlines"></div>
+      <section class="tv-shell" aria-label="Retro television dashboard">
+        <div class="tv-chrome">
+          <div class="tv-bezel">
+            <div class="tv-screen" role="presentation">
+              <div class="screen-overlay"></div>
+              <div class="screen-content">
+                <header class="screen-header">
+                  <p class="session-label">Session 1987-A</p>
+                  <p class="clock">12:00</p>
+                </header>
+                <div class="screen-body">
+                  <div class="title-logo">
+                    <span class="logo-shadow">100</span>
+                    <span class="logo-main">100</span>
+                    <span class="logo-sub">Games in 1</span>
+                  </div>
+                  <div class="menu-frame">
+                    <p class="menu-label">Select Transmission</p>
+                    <ul class="menu-list" role="menu">
+                      <li class="menu-item active" role="menuitem">Start Session</li>
+                      <li class="menu-item" role="menuitem">Continue Playlist</li>
+                      <li class="menu-item" role="menuitem">Score Archives</li>
+                      <li class="menu-item" role="menuitem">Settings</li>
+                    </ul>
+                  </div>
+                  <footer class="screen-footer">
+                    <p>Insert coin or press start to begin.</p>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="control-column" aria-label="Television controls">
+            <div class="control-group">
+              <button class="knob knob--large" aria-label="Power knob"></button>
+              <div class="knob-label">Power</div>
+            </div>
+            <div class="control-group">
+              <button class="knob knob--medium" aria-label="Playlist select"></button>
+              <div class="knob-label">Playlist</div>
+            </div>
+            <div class="control-group">
+              <button class="knob knob--small" aria-label="Volume"></button>
+              <div class="knob-label">Volume</div>
+            </div>
+            <div class="control-stack">
+              <button class="job-pill" type="button">Job: Playlist Curator</button>
+              <button class="job-pill" type="button">Job: Scorekeeper</button>
+              <button class="job-pill" type="button">Job: Session Tech</button>
+            </div>
+          </aside>
+        </div>
+        <div class="tv-base"></div>
+        <div class="glow halo"></div>
+        <div class="glow ambient"></div>
+      </section>
+    </main>
+  </body>
+</html>

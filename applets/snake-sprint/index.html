@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Sprint - 100 Games in 1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewport" role="application" aria-label="Snake Sprint applet">
+      <section class="board-wrapper">
+        <header class="hud" aria-live="polite">
+          <div class="status">
+            <span class="label">Time</span>
+            <span id="time-remaining" class="value">10.0s</span>
+          </div>
+          <div class="status">
+            <span class="label">Objective</span>
+            <span class="value">Reach the flashing food!</span>
+          </div>
+        </header>
+        <canvas id="game-canvas" width="480" height="270" role="img" aria-label="Snake sprinting toward a flashing piece of food"></canvas>
+        <div id="message" class="message" role="alert" aria-live="assertive"></div>
+      </section>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

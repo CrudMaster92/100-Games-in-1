@@ -64,26 +64,28 @@
     "name": "Quick Tap",
     "version": "1.0.0",
     "entry": "applets/quick-tap/index.html",
-    "icon": "applets/quick-tap/assets/icon.png",
+    "icon": "applets/quick-tap/assets/icon.svg",
     "minDurationMs": 12000,
     "maxDurationMs": 20000,
     "difficulty": [
-      "easy"
+      "easy",
+      "medium",
+      "hard"
     ],
     "themes": [
       "arcade"
     ],
     "weights": {
       "easy": 1,
-      "medium": 0.5,
-      "hard": 0.2
+      "medium": 0.8,
+      "hard": 0.5
     },
     "capabilities": [
       "audio",
       "rng"
     ],
     "prerequisites": [],
-    "notes": "Tap highlighted targets before the timer expires."
+    "notes": "Clear the flashing pad sequence before the countdown ends."
   },
   {
     "id": "snake-sprint",

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quick Tap</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell" role="main">
+      <header class="hud" aria-live="polite">
+        <div class="hud__item">
+          <span class="hud__label">Time</span>
+          <span id="time-remaining" class="hud__value">15.0s</span>
+        </div>
+        <div class="hud__item">
+          <span class="hud__label">Pads</span>
+          <span id="pads-cleared" class="hud__value">0 / 0</span>
+        </div>
+        <div class="hud__item">
+          <span class="hud__label">Status</span>
+          <span id="status" class="hud__value">Waiting for host…</span>
+        </div>
+      </header>
+
+      <section class="board" aria-label="Reaction pads">
+        <button class="pad" data-index="0" aria-label="Pad 1"></button>
+        <button class="pad" data-index="1" aria-label="Pad 2"></button>
+        <button class="pad" data-index="2" aria-label="Pad 3"></button>
+        <button class="pad" data-index="3" aria-label="Pad 4"></button>
+        <button class="pad" data-index="4" aria-label="Pad 5"></button>
+        <button class="pad" data-index="5" aria-label="Pad 6"></button>
+      </section>
+
+      <p id="instructions" class="instructions">
+        Watch for the highlighted pad and click it before time runs out.
+      </p>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>

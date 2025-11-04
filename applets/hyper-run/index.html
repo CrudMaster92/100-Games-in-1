@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hyper Run - 100 Games in 1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewport" role="application" aria-label="Hyper Run applet">
+      <section class="game-wrapper">
+        <header class="hud" aria-live="polite">
+          <div class="hud__item">
+            <span class="label">Time</span>
+            <span id="time-remaining" class="value">12.0s</span>
+          </div>
+          <div class="hud__item">
+            <span class="label">Distance</span>
+            <span id="distance" class="value">0 m</span>
+          </div>
+          <div class="hud__item hud__item--wide">
+            <span class="label">Objective</span>
+            <span id="objective" class="value">Survive the sprint!</span>
+          </div>
+        </header>
+        <canvas
+          id="game-canvas"
+          width="480"
+          height="270"
+          role="img"
+          aria-label="Runner sprinting forward dodging neon barriers"
+        ></canvas>
+        <div id="message" class="message" role="alert" aria-live="assertive"></div>
+        <p id="instructions" class="instructions" role="note">
+          Press ↑ or ↓ (or W/S) to switch lanes and avoid the barriers.
+        </p>
+      </section>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

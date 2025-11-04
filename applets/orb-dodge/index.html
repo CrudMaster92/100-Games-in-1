@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orb Dodge - 100 Games in 1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewport" role="application" aria-label="Orb Dodge survival challenge">
+      <section class="game-shell">
+        <header class="hud" aria-live="polite">
+          <div class="hud-block">
+            <span class="label">Time</span>
+            <span id="time-remaining" class="value" aria-live="polite">20.0s</span>
+          </div>
+          <div class="hud-block">
+            <span class="label">Status</span>
+            <span id="status-text" class="value">Awaiting launch</span>
+          </div>
+          <div class="hud-block">
+            <span class="label">Difficulty</span>
+            <span id="difficulty-label" class="value">Medium</span>
+          </div>
+        </header>
+        <div class="canvas-wrapper">
+          <canvas
+            id="playfield"
+            width="480"
+            height="270"
+            role="img"
+            aria-label="Pilot dodging luminous orbs"
+          ></canvas>
+          <div id="message" class="message" role="alert" aria-live="assertive"></div>
+        </div>
+        <footer class="controls" aria-hidden="true">
+          <p>Move with WASD / Arrow keys or drag on the playfield.</p>
+        </footer>
+      </section>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

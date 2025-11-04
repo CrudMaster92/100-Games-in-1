@@ -1,0 +1,127 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  --bg-top: #050814;
+  --bg-bottom: #0e1f3b;
+  --hud-bg: rgba(12, 22, 43, 0.85);
+  --hud-border: rgba(90, 168, 255, 0.4);
+  --hud-text: #e5f0ff;
+  --accent: #48c4ff;
+  --success: #42ff9d;
+  --fail: #ff6b8a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 20% 15%, rgba(72, 196, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 25%, rgba(255, 109, 158, 0.12), transparent 45%),
+    linear-gradient(var(--bg-top), var(--bg-bottom));
+  color: var(--hud-text);
+}
+
+.viewport {
+  width: min(92vw, 560px);
+  padding: 16px;
+}
+
+.game-shell {
+  background: rgba(6, 12, 26, 0.85);
+  border: 1px solid rgba(72, 196, 255, 0.25);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 60px rgba(4, 10, 25, 0.55);
+  padding: 18px clamp(18px, 5vw, 32px) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  text-align: center;
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+}
+
+.hud .label {
+  display: block;
+  font-size: 0.75em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.hud .value {
+  display: block;
+  margin-top: 2px;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.canvas-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(72, 196, 255, 0.24);
+  background: radial-gradient(circle at center, rgba(72, 196, 255, 0.05), transparent 70%);
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: rgba(2, 6, 16, 0.92);
+}
+
+.message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(1rem, 4vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--hud-text);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  padding: 12px;
+}
+
+.message.is-visible {
+  opacity: 1;
+  background: rgba(5, 12, 26, 0.6);
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.message.fail {
+  color: var(--fail);
+}
+
+.controls {
+  text-align: center;
+  font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  opacity: 0.8;
+}
+
+@media (max-width: 540px) {
+  .hud {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Match - 100 Games in 1</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewport" role="application" aria-label="Color Match applet">
+      <section class="panel">
+        <header class="hud" aria-live="polite">
+          <div class="status">
+            <span class="label">Time</span>
+            <span id="time-remaining" class="value">18.0s</span>
+          </div>
+          <div class="status">
+            <span class="label">Streak</span>
+            <span id="current-streak" class="value">0</span>
+          </div>
+          <div class="status">
+            <span class="label">Best</span>
+            <span id="best-streak" class="value">0</span>
+          </div>
+        </header>
+        <section class="prompt" aria-live="assertive" aria-atomic="true">
+          <h1 id="prompt-text">Match the highlighted color</h1>
+          <p id="subtext">Select the tile that matches the RGB code.</p>
+          <p id="mistakes" role="status" aria-live="polite">Mistakes left: 3</p>
+        </section>
+        <section id="palette" class="palette" role="group" aria-label="Color options"></section>
+        <footer id="feedback" class="feedback" role="alert" aria-live="assertive"></footer>
+      </section>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

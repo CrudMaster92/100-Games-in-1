@@ -3,15 +3,30 @@
   "name": "Color Match",
   "version": "1.0.0",
   "entry": "applets/color-match/index.html",
-  "icon": "applets/color-match/assets/icon.png",
+  "icon": "applets/color-match/assets/icon.svg",
   "idealDurationMs": 18000,
   "minDurationMs": 15000,
   "maxDurationMs": 25000,
   "capabilities": ["audio", "storage"],
-  "inputs": ["host.start", "host.setDifficulty", "host.setTimeBudget", "host.pause", "host.resume", "host.end"],
-  "outputs": ["applet.ready", "applet.progress", "applet.result", "applet.error", "applet.needsHint"],
+  "inputs": [
+    "host.bootstrap",
+    "host.start",
+    "host.setDifficulty",
+    "host.setTimeBudget",
+    "host.pause",
+    "host.resume",
+    "host.end",
+    "host.provideCapability"
+  ],
+  "outputs": [
+    "applet.ready",
+    "applet.progress",
+    "applet.result",
+    "applet.error",
+    "applet.needsHint"
+  ],
   "assets": {
-    "local": ["assets/palette.png"],
+    "local": ["assets/icon.svg"],
     "shared": []
   }
 }

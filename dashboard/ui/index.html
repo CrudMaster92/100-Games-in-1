@@ -105,6 +105,7 @@
         }
 
         let hasLoadedRegistry = false;
+        let inlineRegistryPromise = null;
 
         const focusElement = (element) => {
           if (!element || typeof element.focus !== 'function') return;
@@ -143,17 +144,72 @@
           focusElement(openButton);
         };
 
+        const loadInlineRegistry = () => {
+          if (inlineRegistryPromise) {
+            return inlineRegistryPromise;
+          }
+
+          inlineRegistryPromise = new Promise((resolve, reject) => {
+            if (Array.isArray(window.__APPLET_REGISTRY__)) {
+              resolve(window.__APPLET_REGISTRY__);
+              return;
+            }
+
+            const script = document.createElement('script');
+            script.src = '../registry/applets-inline.js';
+            script.async = true;
+
+            script.onload = () => {
+              if (Array.isArray(window.__APPLET_REGISTRY__)) {
+                resolve(window.__APPLET_REGISTRY__);
+              } else {
+                reject(new Error('Inline registry script loaded but no registry was found.'));
+              }
+            };
+
+            script.onerror = () => {
+              reject(new Error('Unable to load inline registry script.'));
+            };
+
+            document.head.appendChild(script);
+          }).catch((error) => {
+            inlineRegistryPromise = null;
+            throw error;
+          });
+
+          return inlineRegistryPromise;
+        };
+
+        const loadRegistryData = async () => {
+          try {
+            const response = await fetch('../registry/applets.json');
+            if (!response.ok) {
+              throw new Error(`Unable to load registry (status ${response.status})`);
+            }
+
+            return await response.json();
+          } catch (networkError) {
+            const isFileProtocol = window.location?.protocol === 'file:';
+            if (!isFileProtocol) {
+              throw networkError;
+            }
+
+            try {
+              const inlineRegistry = await loadInlineRegistry();
+              return JSON.parse(JSON.stringify(inlineRegistry));
+            } catch (inlineError) {
+              console.error('Inline registry fallback failed.', inlineError);
+              throw networkError;
+            }
+          }
+        };
+
         const loadRegistry = async () => {
           hasLoadedRegistry = true;
           renderStatus('Loading applet registry…');
 
           try {
-            const response = await fetch('../registry/applets.json');
-            if (!response.ok) {
-              throw new Error('Unable to load registry');
-            }
-
-            const applets = await response.json();
+            const applets = await loadRegistryData();
             if (!Array.isArray(applets) || applets.length === 0) {
               renderStatus('No applets registered yet.');
               return;
@@ -217,6 +273,7 @@
               renderStatus('Applets found but unable to render entries.');
             }
           } catch (error) {
+            console.error('Failed to load applet registry.', error);
             renderStatus('Failed to load applet registry.');
           }
         };

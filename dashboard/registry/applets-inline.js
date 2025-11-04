@@ -34,7 +34,7 @@
     "name": "Orb Dodge",
     "version": "0.9.0",
     "entry": "applets/orb-dodge/index.html",
-    "icon": "applets/orb-dodge/assets/icon.png",
+    "icon": "applets/orb-dodge/assets/icon.svg",
     "minDurationMs": 18000,
     "maxDurationMs": 28000,
     "difficulty": [

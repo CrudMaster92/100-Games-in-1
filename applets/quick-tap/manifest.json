@@ -3,15 +3,24 @@
   "name": "Quick Tap",
   "version": "1.0.0",
   "entry": "applets/quick-tap/index.html",
-  "icon": "applets/quick-tap/assets/icon.png",
+  "icon": "applets/quick-tap/assets/icon.svg",
   "idealDurationMs": 15000,
   "minDurationMs": 12000,
   "maxDurationMs": 20000,
   "capabilities": ["audio", "rng"],
-  "inputs": ["host.start", "host.setDifficulty", "host.setTimeBudget", "host.pause", "host.resume", "host.end"],
+  "inputs": [
+    "host.bootstrap",
+    "host.start",
+    "host.setDifficulty",
+    "host.setTimeBudget",
+    "host.pause",
+    "host.resume",
+    "host.end",
+    "host.provideCapability"
+  ],
   "outputs": ["applet.ready", "applet.progress", "applet.result", "applet.error"],
   "assets": {
-    "local": ["assets/pads.png"],
+    "local": ["assets/icon.svg"],
     "shared": []
   }
 }

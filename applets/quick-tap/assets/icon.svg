@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="bg" x1="12%" y1="10%" x2="88%" y2="90%">
+      <stop offset="0" stop-color="#1d2f5d" />
+      <stop offset="1" stop-color="#0a1227" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0" stop-color="#49d9ff" stop-opacity="0.95" />
+      <stop offset="1" stop-color="#2b7bff" stop-opacity="0.65" />
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="84" height="84" rx="18" fill="url(#bg)" />
+  <g fill="none" stroke="rgba(114, 164, 255, 0.55)" stroke-width="2">
+    <rect x="15" y="15" width="66" height="66" rx="14" />
+  </g>
+  <g transform="translate(16 16)">
+    <rect x="0" y="0" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="28" y="0" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="56" y="0" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="0" y="28" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="28" y="28" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="56" y="28" width="24" height="24" rx="6" fill="#121b33" stroke="rgba(92, 132, 220, 0.8)" />
+    <rect x="28" y="28" width="24" height="24" rx="6" fill="url(#glow)" stroke="#6bf7ff" stroke-width="2" opacity="0.95" />
+  </g>
+  <circle cx="48" cy="80" r="6" fill="#6bf7ff" opacity="0.65" />
+</svg>

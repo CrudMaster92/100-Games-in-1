@@ -15,6 +15,21 @@
     "notes": "Match the prompted color faster than the clock."
   },
   {
+    "id": "hyper-run",
+    "name": "Hyper Run",
+    "version": "1.0.0",
+    "entry": "applets/hyper-run/index.html",
+    "icon": "applets/hyper-run/assets/icon.svg",
+    "minDurationMs": 12000,
+    "maxDurationMs": 15000,
+    "difficulty": ["easy", "medium", "hard"],
+    "themes": ["neon"],
+    "weights": {"easy": 0.9, "medium": 1.0, "hard": 0.7},
+    "capabilities": ["rng"],
+    "prerequisites": [],
+    "notes": "Dodge neon barriers for a 12-second sprint to survive."
+  },
+  {
     "id": "orb-dodge",
     "name": "Orb Dodge",
     "version": "0.9.0",

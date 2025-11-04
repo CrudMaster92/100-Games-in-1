@@ -1,0 +1,25 @@
+{
+  "id": "hyper-run",
+  "name": "Hyper Run",
+  "version": "1.0.0",
+  "entry": "applets/hyper-run/index.html",
+  "icon": "applets/hyper-run/assets/icon.svg",
+  "idealDurationMs": 12000,
+  "minDurationMs": 12000,
+  "maxDurationMs": 15000,
+  "capabilities": ["rng"],
+  "inputs": [
+    "host.bootstrap",
+    "host.start",
+    "host.setDifficulty",
+    "host.setTimeBudget",
+    "host.pause",
+    "host.resume",
+    "host.end"
+  ],
+  "outputs": ["applet.ready", "applet.progress", "applet.result", "applet.error"],
+  "assets": {
+    "local": ["assets/icon.svg"],
+    "shared": []
+  }
+}

@@ -33,50 +33,77 @@
                       <span class="logo-sub">Games in 1</span>
                     </div>
                     <div class="menu-frame">
-                      <p class="menu-label">Scraper Dashboard</p>
+                      <p class="menu-label">Arcade Status Board</p>
                       <ul class="menu-list" role="menu">
                         <li class="menu-item active" role="menuitem">
                           <div class="menu-item__headline">
-                            <span class="menu-item__name">WPP</span>
-                            <span class="menu-item__status menu-item__status--ok">Running · 12 feeds</span>
+                            <span class="menu-item__name">Color Match</span>
+                            <span class="menu-item__status menu-item__status--ok">Ready · combos primed</span>
                           </div>
-                          <p class="menu-item__detail">Incremental refresh in progress, next export due 14:00&nbsp;UTC.</p>
+                          <p class="menu-item__detail">Calibration perfect — palette seeds refreshed for the next challenger.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
                           <div class="menu-item__headline">
-                            <span class="menu-item__name">Omnicom</span>
-                            <span class="menu-item__status menu-item__status--warn">Review</span>
+                            <span class="menu-item__name">Quick Tap</span>
+                            <span class="menu-item__status menu-item__status--warn">Warmup</span>
                           </div>
-                          <p class="menu-item__detail">Creative taxonomy drift detected — assign analyst before nightly run.</p>
+                          <p class="menu-item__detail">Beat the blinking pads to keep the multiplier alive.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
                           <div class="menu-item__headline">
-                            <span class="menu-item__name">Dentsu</span>
-                            <span class="menu-item__status menu-item__status--blocked">Blocked</span>
+                            <span class="menu-item__name">Hyper Run</span>
+                            <span class="menu-item__status menu-item__status--blocked">Caution</span>
                           </div>
-                          <p class="menu-item__detail">Login challenge raised during auth — capture console logs for support.</p>
+                          <p class="menu-item__detail">Obstacles are spawning fast — stay light on the boost trigger.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
                           <div class="menu-item__headline">
-                            <span class="menu-item__name">Publicis</span>
-                            <span class="menu-item__status menu-item__status--new">Provisioning</span>
+                            <span class="menu-item__name">Snake Sprint</span>
+                            <span class="menu-item__status menu-item__status--new">New routes</span>
                           </div>
-                          <p class="menu-item__detail">Credentials validated — map baseline delivery schedules and confirm fields.</p>
+                          <p class="menu-item__detail">Arena walls reshuffled — grab the fruit without clipping the tail.</p>
                         </li>
                       </ul>
                     </div>
                     <footer class="screen-footer">
-                      <p>Monitor scraper health or open the toolbox for detailed runs.</p>
+                      <p>Load up a mini game, start the arcade marathon, or scout the library.</p>
                     </footer>
                   </div>
                   <div class="screen-panel screen-panel--browser" data-panel="browser" hidden>
                     <div class="browser-header">
-                      <p class="browser-title">Scraper Toolbox</p>
+                      <p class="browser-title">Game Library</p>
                       <button type="button" class="browser-close" aria-label="Return to dashboard">Back</button>
                     </div>
-                    <p class="browser-subtitle">Select a scraper to open the integration build in a separate window.</p>
+                    <p class="browser-subtitle">Select a mini game to open it in a separate window.</p>
                     <ul class="applet-grid" role="list"></ul>
-                    <p class="browser-hint">Connectors open in a new tab so you can focus on the selected run.</p>
+                    <p class="browser-hint">Games open in a new tab so you can focus on the current challenge.</p>
+                  </div>
+                  <div class="screen-panel screen-panel--marathon" data-panel="marathon" hidden>
+                    <header class="marathon-header">
+                      <h2 class="marathon-title">Arcade Marathon</h2>
+                      <p class="marathon-subtitle">Play every mini game back-to-back.</p>
+                    </header>
+                    <div class="marathon-stats" role="status">
+                      <div class="marathon-stat">
+                        <span class="marathon-stat__label">Games cleared</span>
+                        <span class="marathon-stat__value" id="marathon-wins">0</span>
+                      </div>
+                      <div class="marathon-stat">
+                        <span class="marathon-stat__label">Current challenge</span>
+                        <span class="marathon-stat__value" id="marathon-current">---</span>
+                      </div>
+                      <div class="marathon-stat">
+                        <span class="marathon-stat__label">Total games</span>
+                        <span class="marathon-stat__value" id="marathon-total">0</span>
+                      </div>
+                    </div>
+                    <div class="marathon-stage" id="marathon-stage">
+                      <div class="marathon-frame-slot" id="marathon-frame-slot" aria-live="polite"></div>
+                      <p class="marathon-message" id="marathon-message">Launch the arcade marathon to start the run.</p>
+                    </div>
+                    <div class="marathon-actions">
+                      <button type="button" class="browser-close" id="marathon-exit">Exit Marathon</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -96,10 +123,10 @@
               <div class="knob-label">Volume</div>
             </div>
             <div class="control-stack">
-              <button class="job-pill" type="button" id="open-game-browser">Scraper toolbox · browse connectors</button>
-              <button class="job-pill" type="button">WPP · validate budget table mapping</button>
-              <button class="job-pill" type="button">Omnicom · review taxonomy drift report</button>
-              <button class="job-pill" type="button">Publicis · stage onboarding checklist</button>
+              <button class="job-pill" type="button" id="open-game-browser">Game library · browse mini games</button>
+              <button class="job-pill" type="button" id="start-marathon">Arcade marathon · play all in sequence</button>
+              <button class="job-pill" type="button">Color Match · review streak tips</button>
+              <button class="job-pill" type="button">Quick Tap · check leaderboard</button>
             </div>
           </aside>
         </div>
@@ -111,19 +138,61 @@
     <script>
       (() => {
         const openButton = document.getElementById('open-game-browser');
+        const startMarathonButton = document.getElementById('start-marathon');
         const menuPanel = document.querySelector('[data-panel="menu"]');
         const browserPanel = document.querySelector('[data-panel="browser"]');
+        const marathonPanel = document.querySelector('[data-panel="marathon"]');
         const closeButton = browserPanel?.querySelector('.browser-close');
+        const marathonExitButton = document.getElementById('marathon-exit');
         const screenBody = document.querySelector('.screen-body');
         const appletGrid = browserPanel?.querySelector('.applet-grid');
+        const marathonFrameSlot = document.getElementById('marathon-frame-slot');
+        const marathonMessage = document.getElementById('marathon-message');
+        const marathonWins = document.getElementById('marathon-wins');
+        const marathonCurrent = document.getElementById('marathon-current');
+        const marathonTotal = document.getElementById('marathon-total');
         const repoRootUrl = new URL('../../', window.location.href);
 
-        if (!openButton || !menuPanel || !browserPanel || !closeButton || !screenBody || !appletGrid) {
+        if (
+          !openButton ||
+          !startMarathonButton ||
+          !menuPanel ||
+          !browserPanel ||
+          !marathonPanel ||
+          !closeButton ||
+          !marathonExitButton ||
+          !screenBody ||
+          !appletGrid ||
+          !marathonFrameSlot ||
+          !marathonMessage ||
+          !marathonWins ||
+          !marathonCurrent ||
+          !marathonTotal
+        ) {
           return;
         }
 
         let hasLoadedRegistry = false;
         let inlineRegistryPromise = null;
+        let registryCache = null;
+
+        const MARATHON_DEFAULT_MESSAGE = 'Launch the arcade marathon to start the run.';
+
+        const marathonState = {
+          active: false,
+          applets: [],
+          index: -1,
+          wins: 0,
+          sessionId: null,
+          frame: null,
+          readyTimeout: null,
+          timerInterval: null,
+          timeoutHandle: null,
+          deadline: 0,
+          resultHandled: false,
+          currentApplet: null,
+          timeBudgetMs: 0
+        };
 
         const focusElement = (element) => {
           if (!element || typeof element.focus !== 'function') return;
@@ -134,6 +203,19 @@
           }
         };
 
+        const setScreenMode = (mode) => {
+          const isMenu = mode === 'menu';
+          const isBrowser = mode === 'browser';
+          const isMarathon = mode === 'marathon';
+
+          menuPanel.hidden = !isMenu;
+          browserPanel.hidden = !isBrowser;
+          marathonPanel.hidden = !isMarathon;
+
+          screenBody.classList.toggle('screen-body--browser', isBrowser);
+          screenBody.classList.toggle('screen-body--marathon', isMarathon);
+        };
+
         const renderStatus = (message) => {
           appletGrid.innerHTML = '';
           const statusItem = document.createElement('li');
@@ -142,24 +224,13 @@
           appletGrid.appendChild(statusItem);
         };
 
-        const showBrowser = () => {
-          menuPanel.hidden = true;
-          browserPanel.hidden = false;
-          screenBody.classList.add('screen-body--browser');
-          openButton.setAttribute('aria-pressed', 'true');
-          focusElement(closeButton);
-
-          if (!hasLoadedRegistry) {
-            loadRegistry();
-          }
-        };
-
-        const hideBrowser = () => {
-          browserPanel.hidden = true;
-          menuPanel.hidden = false;
-          screenBody.classList.remove('screen-body--browser');
-          openButton.setAttribute('aria-pressed', 'false');
-          focusElement(openButton);
+        const resetMarathonUi = () => {
+          marathonPanel.classList.remove('marathon-panel--failed', 'marathon-panel--complete');
+          marathonFrameSlot.innerHTML = '';
+          marathonMessage.textContent = MARATHON_DEFAULT_MESSAGE;
+          marathonWins.textContent = '0';
+          marathonCurrent.textContent = '---';
+          marathonTotal.textContent = '0';
         };
 
         const loadInlineRegistry = () => {
@@ -222,12 +293,22 @@
           }
         };
 
+        const getRegistry = async () => {
+          if (Array.isArray(registryCache)) {
+            return registryCache;
+          }
+
+          const data = await loadRegistryData();
+          registryCache = Array.isArray(data) ? data : [];
+          return registryCache;
+        };
+
         const loadRegistry = async () => {
           hasLoadedRegistry = true;
           renderStatus('Loading applet registry…');
 
           try {
-            const applets = await loadRegistryData();
+            const applets = await getRegistry();
             if (!Array.isArray(applets) || applets.length === 0) {
               renderStatus('No applets registered yet.');
               return;
@@ -294,9 +375,367 @@
             }
           } catch (error) {
             console.error('Failed to load applet registry.', error);
+            hasLoadedRegistry = false;
             renderStatus('Failed to load applet registry.');
           }
         };
+
+        const showBrowser = () => {
+          if (marathonState.active) {
+            return;
+          }
+
+          setScreenMode('browser');
+          openButton.setAttribute('aria-pressed', 'true');
+          startMarathonButton.setAttribute('aria-pressed', 'false');
+          focusElement(closeButton);
+
+          if (!hasLoadedRegistry) {
+            loadRegistry();
+          }
+        };
+
+        const hideBrowser = () => {
+          setScreenMode('menu');
+          openButton.setAttribute('aria-pressed', 'false');
+          focusElement(openButton);
+        };
+
+        const chooseTimeBudget = (applet) => {
+          const min = typeof applet?.minDurationMs === 'number' ? applet.minDurationMs : 15000;
+          const max = typeof applet?.maxDurationMs === 'number' ? applet.maxDurationMs : min;
+          const clampedMin = Math.max(5000, min);
+          const clampedMax = Math.max(clampedMin, max);
+          return Math.round((clampedMin + clampedMax) / 2);
+        };
+
+        const sendToApplet = (type, payload = {}) => {
+          if (!marathonState.sessionId || !marathonState.frame?.contentWindow) {
+            return;
+          }
+          marathonState.frame.contentWindow.postMessage(
+            { type, sessionId: marathonState.sessionId, payload },
+            '*'
+          );
+        };
+
+        const clearMarathonTimers = () => {
+          if (marathonState.readyTimeout) {
+            clearTimeout(marathonState.readyTimeout);
+            marathonState.readyTimeout = null;
+          }
+          if (marathonState.timerInterval) {
+            clearInterval(marathonState.timerInterval);
+            marathonState.timerInterval = null;
+          }
+          if (marathonState.timeoutHandle) {
+            clearTimeout(marathonState.timeoutHandle);
+            marathonState.timeoutHandle = null;
+          }
+        };
+
+        const cleanupCurrentApplet = (forceEnd = false) => {
+          clearMarathonTimers();
+
+          if (forceEnd && marathonState.frame?.contentWindow && marathonState.sessionId) {
+            try {
+              marathonState.frame.contentWindow.postMessage(
+                { type: 'host.end', sessionId: marathonState.sessionId, payload: { outcome: 'aborted' } },
+                '*'
+              );
+            } catch (error) {
+              console.warn('Unable to notify applet about marathon exit.', error);
+            }
+          }
+
+          if (marathonState.frame) {
+            marathonState.frame.remove();
+            marathonState.frame = null;
+          }
+
+          marathonState.sessionId = null;
+          marathonState.currentApplet = null;
+          marathonState.timeBudgetMs = 0;
+        };
+
+        const handleAppletFailure = (outcome, reason) => {
+          if (marathonState.resultHandled) {
+            return;
+          }
+
+          const applet = marathonState.currentApplet;
+          marathonState.resultHandled = true;
+          marathonState.active = false;
+          cleanupCurrentApplet();
+
+          const total = marathonState.applets.length;
+          const wins = marathonState.wins;
+          const appletName = applet?.name || 'the game';
+
+          let message = '';
+          if (typeof reason === 'string' && reason.trim()) {
+            message = reason.trim();
+          } else if (outcome === 'timeout') {
+            message = `Time expired during ${appletName}.`;
+          } else {
+            message = `${appletName} knocked you out.`;
+          }
+
+          marathonPanel.classList.remove('marathon-panel--complete');
+          marathonPanel.classList.add('marathon-panel--failed');
+          marathonMessage.textContent = `Marathon over! ${message} You cleared ${wins} of ${total} games.`;
+          marathonCurrent.textContent = appletName;
+          startMarathonButton.setAttribute('aria-pressed', 'false');
+          openButton.disabled = false;
+          focusElement(marathonExitButton);
+        };
+
+        const advanceToNextApplet = () => {
+          if (!marathonState.active) {
+            return;
+          }
+
+          cleanupCurrentApplet();
+          marathonState.resultHandled = false;
+
+          marathonState.index += 1;
+          if (marathonState.index >= marathonState.applets.length) {
+            marathonState.active = false;
+            marathonPanel.classList.add('marathon-panel--complete');
+            marathonPanel.classList.remove('marathon-panel--failed');
+            marathonMessage.textContent = `Perfect run! You cleared all ${marathonState.applets.length} games!`;
+            marathonCurrent.textContent = 'Complete';
+            startMarathonButton.setAttribute('aria-pressed', 'false');
+            openButton.disabled = false;
+            focusElement(marathonExitButton);
+            return;
+          }
+
+          const applet = marathonState.applets[marathonState.index];
+          marathonState.currentApplet = applet;
+          marathonCurrent.textContent = applet?.name || applet?.id || '---';
+          marathonPanel.classList.remove('marathon-panel--failed', 'marathon-panel--complete');
+          marathonFrameSlot.innerHTML = '';
+          marathonMessage.textContent = `Loading ${applet?.name || 'next challenge'}…`;
+
+          const frame = document.createElement('iframe');
+          frame.className = 'marathon-frame';
+          frame.setAttribute('tabindex', '-1');
+          frame.title = `${applet?.name || 'Mini game'} viewport`;
+
+          try {
+            const appletUrl = new URL(applet.entry, repoRootUrl);
+            frame.src = appletUrl.toString();
+          } catch (error) {
+            console.error('Failed to resolve applet URL.', error);
+            handleAppletFailure('error', 'Unable to load the next game.');
+            return;
+          }
+
+          frame.addEventListener('load', () => {
+            if (!marathonState.active || marathonState.frame !== frame) {
+              return;
+            }
+
+            const sessionId = `marathon-${applet.id || marathonState.index}-${Date.now()}`;
+            marathonState.sessionId = sessionId;
+            marathonState.timeBudgetMs = chooseTimeBudget(applet);
+
+            const difficulty =
+              (Array.isArray(applet?.difficulty) && applet.difficulty.length && applet.difficulty[0]) || 'easy';
+
+            const payload = {
+              appletId: applet.id || '',
+              version: applet.version || '1.0.0',
+              seed: Date.now() + marathonState.index * 17,
+              difficulty,
+              timeBudgetMs: marathonState.timeBudgetMs,
+              capabilities: {}
+            };
+
+            sendToApplet('host.bootstrap', payload);
+
+            clearMarathonTimers();
+            marathonState.readyTimeout = window.setTimeout(() => {
+              if (marathonState.active && marathonState.sessionId === sessionId && !marathonState.resultHandled) {
+                handleAppletFailure('error', 'The game never reported ready.');
+              }
+            }, 3200);
+          });
+
+          marathonFrameSlot.appendChild(frame);
+          marathonState.frame = frame;
+        };
+
+        const startActiveApplet = () => {
+          if (!marathonState.active || !marathonState.currentApplet || marathonState.resultHandled) {
+            return;
+          }
+
+          clearMarathonTimers();
+
+          const difficulty =
+            (Array.isArray(marathonState.currentApplet.difficulty) &&
+              marathonState.currentApplet.difficulty.length &&
+              marathonState.currentApplet.difficulty[0]) ||
+            'easy';
+
+          const timeBudget = marathonState.timeBudgetMs || chooseTimeBudget(marathonState.currentApplet);
+          marathonState.timeBudgetMs = timeBudget;
+          marathonState.deadline = performance.now() + timeBudget;
+
+          marathonMessage.textContent = 'Go!';
+          sendToApplet('host.setDifficulty', { level: difficulty });
+          sendToApplet('host.setTimeBudget', { remainingMs: timeBudget });
+          sendToApplet('host.start');
+
+          marathonState.timerInterval = window.setInterval(() => {
+            if (!marathonState.sessionId || marathonState.resultHandled) {
+              return;
+            }
+
+            const remaining = Math.max(0, Math.round(marathonState.deadline - performance.now()));
+            sendToApplet('host.setTimeBudget', { remainingMs: remaining });
+
+            if (remaining <= 0) {
+              clearInterval(marathonState.timerInterval);
+              marathonState.timerInterval = null;
+            }
+          }, 500);
+
+          marathonState.timeoutHandle = window.setTimeout(() => {
+            if (!marathonState.resultHandled) {
+              sendToApplet('host.end', { outcome: 'timeout' });
+              handleAppletFailure('timeout');
+            }
+          }, timeBudget + 1200);
+        };
+
+        const handleAppletResult = (payload) => {
+          if (marathonState.resultHandled) {
+            return;
+          }
+
+          const outcome = payload?.outcome;
+          if (outcome === 'success') {
+            marathonState.resultHandled = true;
+            marathonState.wins += 1;
+            marathonWins.textContent = String(marathonState.wins);
+
+            const appletName = marathonState.currentApplet?.name || 'the game';
+            marathonMessage.textContent = `Cleared ${appletName}!`;
+
+            cleanupCurrentApplet();
+
+            window.setTimeout(() => {
+              marathonState.resultHandled = false;
+              if (marathonState.active) {
+                advanceToNextApplet();
+              }
+            }, 900);
+          } else {
+            handleAppletFailure(outcome || 'fail', payload?.reason);
+          }
+        };
+
+        const startMarathon = async () => {
+          if (marathonState.active) {
+            return;
+          }
+
+          openButton.disabled = true;
+          startMarathonButton.setAttribute('aria-pressed', 'true');
+          setScreenMode('marathon');
+          marathonFrameSlot.innerHTML = '';
+          marathonPanel.classList.remove('marathon-panel--failed', 'marathon-panel--complete');
+          marathonMessage.textContent = 'Preparing marathon playlist…';
+          marathonWins.textContent = '0';
+          marathonCurrent.textContent = '---';
+          marathonTotal.textContent = '0';
+
+          let playlist = [];
+          try {
+            const applets = await getRegistry();
+            playlist = (Array.isArray(applets) ? applets : []).filter((applet) => applet && applet.entry);
+          } catch (error) {
+            console.error('Unable to load registry for marathon.', error);
+            marathonMessage.textContent = 'Unable to load the game registry.';
+            marathonPanel.classList.add('marathon-panel--failed');
+            startMarathonButton.setAttribute('aria-pressed', 'false');
+            openButton.disabled = false;
+            focusElement(startMarathonButton);
+            return;
+          }
+
+          if (!playlist.length) {
+            marathonMessage.textContent = 'No games are registered yet for the marathon.';
+            marathonPanel.classList.add('marathon-panel--failed');
+            startMarathonButton.setAttribute('aria-pressed', 'false');
+            openButton.disabled = false;
+            focusElement(startMarathonButton);
+            return;
+          }
+
+          marathonState.active = true;
+          marathonState.applets = playlist.slice();
+          marathonState.index = -1;
+          marathonState.wins = 0;
+          marathonState.resultHandled = false;
+          marathonState.sessionId = null;
+          marathonState.currentApplet = null;
+          marathonState.frame = null;
+          marathonTotal.textContent = String(playlist.length);
+          focusElement(marathonExitButton);
+
+          advanceToNextApplet();
+        };
+
+        const exitMarathon = () => {
+          const wasActive = marathonState.active;
+          marathonState.active = false;
+          marathonState.applets = [];
+          marathonState.index = -1;
+          marathonState.wins = 0;
+          marathonState.resultHandled = false;
+
+          cleanupCurrentApplet(wasActive);
+          openButton.disabled = false;
+          startMarathonButton.setAttribute('aria-pressed', 'false');
+          setScreenMode('menu');
+          resetMarathonUi();
+          focusElement(startMarathonButton);
+        };
+
+        window.addEventListener('message', (event) => {
+          if (!marathonState.frame || event.source !== marathonState.frame.contentWindow) {
+            return;
+          }
+
+          const data = event.data;
+          if (!data || typeof data !== 'object') {
+            return;
+          }
+
+          if (data.sessionId && data.sessionId !== marathonState.sessionId) {
+            return;
+          }
+
+          switch (data.type) {
+            case 'applet.ready':
+              marathonState.readyTimeout && clearTimeout(marathonState.readyTimeout);
+              marathonState.readyTimeout = null;
+              startActiveApplet();
+              break;
+            case 'applet.result':
+              handleAppletResult(data.payload || {});
+              break;
+            case 'applet.error':
+              handleAppletFailure('error', data.payload?.message);
+              break;
+            default:
+              break;
+          }
+        });
 
         openButton.addEventListener('click', showBrowser);
         closeButton.addEventListener('click', hideBrowser);
@@ -305,7 +744,13 @@
             hideBrowser();
           }
         });
+
+        startMarathonButton.addEventListener('click', startMarathon);
+        marathonExitButton.addEventListener('click', exitMarathon);
+
+        resetMarathonUi();
       })();
     </script>
+
   </body>
 </html>

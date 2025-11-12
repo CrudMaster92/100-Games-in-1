@@ -112,7 +112,7 @@ body::before {
 .screen-content {
   position: relative;
   z-index: 2;
-  height: clamp(420px, 55vh, 620px);
+  height: clamp(480px, 60vh, 720px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -310,12 +310,12 @@ body::before {
 
 .marathon-title {
   margin: 0;
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-size: clamp(0.95rem, 1.8vw, 1.35rem);
 }
 
 .marathon-subtitle {
   margin: 0;
-  font-size: clamp(0.65rem, 1vw, 0.9rem);
+  font-size: clamp(0.58rem, 0.9vw, 0.8rem);
   color: var(--text-muted);
 }
 
@@ -354,10 +354,12 @@ body::before {
 }
 
 .marathon-frame-slot {
+  position: relative;
   width: 100%;
-  min-height: clamp(220px, 38vh, 320px);
+  min-height: clamp(340px, 48vh, 520px);
+  aspect-ratio: 16 / 9;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   background: rgba(10, 25, 45, 0.55);
   border: 2px solid rgba(141, 255, 181, 0.25);
@@ -368,7 +370,7 @@ body::before {
 
 .marathon-frame {
   width: 100%;
-  height: clamp(220px, 38vh, 320px);
+  height: 100%;
   border: none;
   background: #000;
 }

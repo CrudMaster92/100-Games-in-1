@@ -175,6 +175,7 @@
         let hasLoadedRegistry = false;
         let inlineRegistryPromise = null;
         let registryCache = null;
+        let viewportObserver = null;
 
         const MARATHON_DEFAULT_MESSAGE = 'Launch the arcade marathon to start the run.';
 
@@ -192,6 +193,32 @@
           resultHandled: false,
           currentApplet: null,
           timeBudgetMs: 0
+        };
+
+        const notifyAppletViewport = () => {
+          if (!marathonState.sessionId || !marathonState.frame) {
+            return;
+          }
+
+          const rect = marathonFrameSlot.getBoundingClientRect();
+          const width = Math.round(rect.width);
+          const height = Math.round(rect.height);
+
+          if (width > 0 && height > 0) {
+            sendToApplet('host.viewport', { width, height });
+          }
+        };
+
+        const setupViewportObserver = () => {
+          if (viewportObserver || typeof ResizeObserver !== 'function') {
+            return;
+          }
+
+          viewportObserver = new ResizeObserver(() => {
+            notifyAppletViewport();
+          });
+
+          viewportObserver.observe(marathonFrameSlot);
         };
 
         const focusElement = (element) => {
@@ -215,6 +242,9 @@
           screenBody.classList.toggle('screen-body--browser', isBrowser);
           screenBody.classList.toggle('screen-body--marathon', isMarathon);
         };
+
+        setupViewportObserver();
+        window.addEventListener('resize', notifyAppletViewport);
 
         const renderStatus = (message) => {
           appletGrid.innerHTML = '';
@@ -522,6 +552,9 @@
           frame.className = 'marathon-frame';
           frame.setAttribute('tabindex', '-1');
           frame.title = `${applet?.name || 'Mini game'} viewport`;
+          frame.style.width = '100%';
+          frame.style.height = '100%';
+          frame.style.display = 'block';
 
           try {
             const appletUrl = new URL(applet.entry, repoRootUrl);
@@ -554,6 +587,7 @@
             };
 
             sendToApplet('host.bootstrap', payload);
+            notifyAppletViewport();
 
             clearMarathonTimers();
             marathonState.readyTimeout = window.setTimeout(() => {

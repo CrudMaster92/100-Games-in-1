@@ -33,6 +33,7 @@ All messages travel as JSON objects with a `type` string, `sessionId`, and optio
 - `host.pause` / `host.resume` – pause or resume timers and input.
 - `host.end` – force-terminate the applet (playlist advance).
 - `host.provideCapability` – payload `{name, version, endpoint}` (optional per applet).
+- `host.viewport` – payload `{width, height}` announcing the current sandbox size. Sent on mount and whenever the viewport resizes.
 
 **Applet → Host**
 

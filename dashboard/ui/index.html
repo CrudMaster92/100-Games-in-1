@@ -116,6 +116,7 @@
         const closeButton = browserPanel?.querySelector('.browser-close');
         const screenBody = document.querySelector('.screen-body');
         const appletGrid = browserPanel?.querySelector('.applet-grid');
+        const repoRootUrl = new URL('../../', window.location.href);
 
         if (!openButton || !menuPanel || !browserPanel || !closeButton || !screenBody || !appletGrid) {
           return;
@@ -247,7 +248,9 @@
 
                 const link = document.createElement('a');
                 link.className = 'applet-link';
-                link.href = `../${applet.entry}`;
+
+                const appletUrl = new URL(applet.entry, repoRootUrl);
+                link.href = appletUrl.toString();
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
                 link.title = `Open ${applet.name}`;

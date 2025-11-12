@@ -33,34 +33,50 @@
                       <span class="logo-sub">Games in 1</span>
                     </div>
                     <div class="menu-frame">
-                      <p class="menu-label">Agent Update Queue</p>
+                      <p class="menu-label">Scraper Dashboard</p>
                       <ul class="menu-list" role="menu">
                         <li class="menu-item active" role="menuitem">
-                          Quick Tap — Rapid reflex target chase
+                          <div class="menu-item__headline">
+                            <span class="menu-item__name">WPP</span>
+                            <span class="menu-item__status menu-item__status--ok">Running · 12 feeds</span>
+                          </div>
+                          <p class="menu-item__detail">Incremental refresh in progress, next export due 14:00&nbsp;UTC.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
-                          Color Match — Align swatches before the timer fades
+                          <div class="menu-item__headline">
+                            <span class="menu-item__name">Omnicom</span>
+                            <span class="menu-item__status menu-item__status--warn">Review</span>
+                          </div>
+                          <p class="menu-item__detail">Creative taxonomy drift detected — assign analyst before nightly run.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
-                          Orb Dodge — Weave through incoming cosmic hazards
+                          <div class="menu-item__headline">
+                            <span class="menu-item__name">Dentsu</span>
+                            <span class="menu-item__status menu-item__status--blocked">Blocked</span>
+                          </div>
+                          <p class="menu-item__detail">Login challenge raised during auth — capture console logs for support.</p>
                         </li>
                         <li class="menu-item" role="menuitem">
-                          Snake Sprint — Dash to the flashing snack in 10s
+                          <div class="menu-item__headline">
+                            <span class="menu-item__name">Publicis</span>
+                            <span class="menu-item__status menu-item__status--new">Provisioning</span>
+                          </div>
+                          <p class="menu-item__detail">Credentials validated — map baseline delivery schedules and confirm fields.</p>
                         </li>
                       </ul>
                     </div>
                     <footer class="screen-footer">
-                      <p>Insert coin or press start to begin.</p>
+                      <p>Monitor scraper health or open the toolbox for detailed runs.</p>
                     </footer>
                   </div>
                   <div class="screen-panel screen-panel--browser" data-panel="browser" hidden>
                     <div class="browser-header">
-                      <p class="browser-title">Test Cabinet</p>
+                      <p class="browser-title">Scraper Toolbox</p>
                       <button type="button" class="browser-close" aria-label="Return to dashboard">Back</button>
                     </div>
-                    <p class="browser-subtitle">Select a game to launch a standalone playtest window.</p>
+                    <p class="browser-subtitle">Select a scraper to open the integration build in a separate window.</p>
                     <ul class="applet-grid" role="list"></ul>
-                    <p class="browser-hint">Games open in a new tab so you can focus on the chosen build.</p>
+                    <p class="browser-hint">Connectors open in a new tab so you can focus on the selected run.</p>
                   </div>
                 </div>
               </div>
@@ -80,9 +96,10 @@
               <div class="knob-label">Volume</div>
             </div>
             <div class="control-stack">
-              <button class="job-pill" type="button" id="open-game-browser">Test cabinet · browse applets</button>
-              <button class="job-pill" type="button">Color Match · polish palette hints</button>
-              <button class="job-pill" type="button">Snake Sprint · verify countdown tuning</button>
+              <button class="job-pill" type="button" id="open-game-browser">Scraper toolbox · browse connectors</button>
+              <button class="job-pill" type="button">WPP · validate budget table mapping</button>
+              <button class="job-pill" type="button">Omnicom · review taxonomy drift report</button>
+              <button class="job-pill" type="button">Publicis · stage onboarding checklist</button>
             </div>
           </aside>
         </div>

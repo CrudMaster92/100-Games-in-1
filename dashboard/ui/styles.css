@@ -342,6 +342,8 @@ body::before {
 
 .menu-item {
   position: relative;
+  display: grid;
+  gap: clamp(0.35rem, 0.6vh, 0.5rem);
   padding: clamp(0.6rem, 1vh, 0.85rem) clamp(0.75rem, 1.2vw, 1.1rem);
   border: 1px solid transparent;
   background: rgba(6, 12, 24, 0.65);
@@ -349,6 +351,54 @@ body::before {
   font-size: clamp(0.7rem, 1vw, 0.85rem);
   letter-spacing: 0.05em;
   transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.menu-item__headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: clamp(0.4rem, 0.8vw, 0.9rem);
+}
+
+.menu-item__name {
+  font-size: clamp(0.75rem, 1.1vw, 0.95rem);
+  letter-spacing: 0.08em;
+  color: #f5f5ff;
+}
+
+.menu-item.active .menu-item__name {
+  color: var(--crt-green);
+}
+
+.menu-item__status {
+  font-size: clamp(0.55rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.menu-item__status--ok {
+  color: var(--crt-green);
+}
+
+.menu-item__status--warn {
+  color: var(--crt-amber);
+}
+
+.menu-item__status--blocked {
+  color: var(--crt-red);
+}
+
+.menu-item__status--new {
+  color: #80c7ff;
+}
+
+.menu-item__detail {
+  margin: 0;
+  font-size: clamp(0.6rem, 0.95vw, 0.75rem);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-transform: none;
 }
 
 .menu-item::before {

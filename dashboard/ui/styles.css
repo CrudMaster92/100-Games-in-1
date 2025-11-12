@@ -273,6 +273,12 @@ body::before {
   row-gap: clamp(1rem, 2vh, 1.6rem);
 }
 
+.screen-body--marathon {
+  align-content: stretch;
+  justify-items: stretch;
+  row-gap: clamp(1rem, 2vh, 1.6rem);
+}
+
 .screen-panel {
   width: 100%;
   display: grid;
@@ -287,6 +293,104 @@ body::before {
 .screen-panel--browser {
   justify-items: stretch;
   text-align: left;
+}
+
+.screen-panel--marathon {
+  justify-items: stretch;
+  text-align: left;
+  gap: clamp(1rem, 2vh, 1.6rem);
+}
+
+.marathon-header {
+  text-align: center;
+  display: grid;
+  gap: clamp(0.4rem, 0.9vh, 0.7rem);
+  letter-spacing: 0.08em;
+}
+
+.marathon-title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+}
+
+.marathon-subtitle {
+  margin: 0;
+  font-size: clamp(0.65rem, 1vw, 0.9rem);
+  color: var(--text-muted);
+}
+
+.marathon-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(0.75rem, 1.2vh, 1rem);
+  width: 100%;
+}
+
+.marathon-stat {
+  padding: clamp(0.65rem, 1.2vh, 0.9rem) clamp(0.8rem, 1.8vw, 1.2rem);
+  border: 2px solid rgba(141, 255, 181, 0.35);
+  border-radius: clamp(0.6rem, 1.2vw, 1rem);
+  background: rgba(10, 25, 45, 0.75);
+  display: grid;
+  gap: clamp(0.2rem, 0.6vh, 0.4rem);
+  text-align: center;
+}
+
+.marathon-stat__label {
+  font-size: clamp(0.55rem, 0.95vw, 0.75rem);
+  color: var(--text-muted);
+}
+
+.marathon-stat__value {
+  font-size: clamp(0.95rem, 2vw, 1.35rem);
+  color: var(--crt-amber);
+}
+
+.marathon-stage {
+  display: grid;
+  gap: clamp(0.6rem, 1vh, 1rem);
+  justify-items: center;
+  width: 100%;
+}
+
+.marathon-frame-slot {
+  width: 100%;
+  min-height: clamp(220px, 38vh, 320px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 25, 45, 0.55);
+  border: 2px solid rgba(141, 255, 181, 0.25);
+  border-radius: clamp(0.8rem, 1.4vw, 1.2rem);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.marathon-frame {
+  width: 100%;
+  height: clamp(220px, 38vh, 320px);
+  border: none;
+  background: #000;
+}
+
+.marathon-message {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(0.75rem, 1.4vw, 1.1rem);
+  color: var(--crt-green);
+}
+
+.marathon-panel--failed .marathon-message {
+  color: var(--crt-red);
+}
+
+.marathon-panel--complete .marathon-message {
+  color: var(--crt-amber);
+}
+
+.marathon-actions {
+  display: flex;
+  justify-content: center;
 }
 
 .title-logo {
